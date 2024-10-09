@@ -56,8 +56,6 @@ public abstract class Customer {
 	public void setPhoneNo(int phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	public void resarch() {
-		
-	}
+	
 	
 }
