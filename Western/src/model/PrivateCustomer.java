@@ -5,8 +5,8 @@ public class PrivateCustomer extends Customer {
 	private String customerNo;
 	
 	
-	public PrivateCustomer(int customerId, String name, String street, String zipCode, String country, String phoneNo,String customerNo) {
-		super(customerId, name, street, zipCode,country, phoneNo);
+	public PrivateCustomer(int customerId, String name, String street, String zipCode, String country, String phoneNo,String customerType,String customerNo) {
+		super(customerId, name, street, zipCode,country, phoneNo, customerType);
 		this.customerNo=customerNo;
 	}
 	

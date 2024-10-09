@@ -8,15 +8,24 @@ public abstract class Customer {
 	private String zipCode;
 	private String country;
 	private String phoneNo;
+	private String customerType;
 	
-	public Customer(int customerId,String name,String address,String zipCode, String country,String phoneNo ) {
+	public Customer(int customerId,String name,String address,String zipCode, String country,String phoneNo,String customerType) {
 		this.customerId=customerId;
 		this.name=name;
 		this.street=street;
 		this.zipCode=zipCode;
 		this.country=country;
 		this.phoneNo=phoneNo;
-		
+		this.customerType=customerType;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
 	}
 
 	public String getName() {
