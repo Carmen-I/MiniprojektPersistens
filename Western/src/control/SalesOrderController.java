@@ -4,7 +4,7 @@ import model.Customer;
 import model.Product;
 import model.SalesOrder;
 
-public class SaleOrderController {
+public class SalesOrderController {
 
 	private SalesOrder salesOrder;
 	
