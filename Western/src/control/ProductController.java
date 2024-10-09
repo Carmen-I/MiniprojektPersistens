@@ -1,18 +1,15 @@
 package control;
 
+import db.ProductDB;
 import model.Product;
 
 public class ProductController {
 	
-	public Product findProductByBarcode(String barcode) {
+	public Product findProductByBarcode(String barcode, boolean retrieveAssociation ) {
 		
-		return null;
-	}
-	
-	public void checkStock(int quantity,Product product) {
+		ProductDB productdb = new ProductDB();
+		return productdb.findProductByBarcode(barcode);
 		
 	}
-	
-	
 
 }
