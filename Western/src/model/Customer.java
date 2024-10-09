@@ -2,17 +2,19 @@ package model;
 
 public abstract class Customer {
 
+	private int customerId;
 	private String name;
-	private String address;
-	private int zipCode;
-	private String city;
-	private int phoneNo;
+	private String street;
+	private String zipCode;
+	private String country;
+	private String phoneNo;
 	
-	public Customer(String name,String address,int zipCode, String city,int phoneNo ) {
+	public Customer(int customerId,String name,String address,String zipCode, String country,String phoneNo ) {
+		this.customerId=customerId;
 		this.name=name;
-		this.address=address;
+		this.street=street;
 		this.zipCode=zipCode;
-		this.city=city;
+		this.country=country;
 		this.phoneNo=phoneNo;
 		
 	}
@@ -25,36 +27,44 @@ public abstract class Customer {
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getStreet() {
+		return street;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStreet(String street) {
+		this.street = street;
 	}
 
-	public int getZipCode() {
+	public String getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(int zipCode) {
+	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
 
-	public String getCity() {
-		return city;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
-	public int getPhoneNo() {
+	public String getPhoneNo() {
 		return phoneNo;
 	}
 
-	public void setPhoneNo(int phoneNo) {
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 	
 	

@@ -2,19 +2,26 @@ package model;
 
 public class PrivateCustomer extends Customer {
 
-	private int customerNo;
+	private String customerNo;
 	
-	public int getCustomerNo() {
+	
+	public PrivateCustomer(int customerId, String name, String street, String zipCode, String country, String phoneNo,String customerNo) {
+		super(customerId, name, street, zipCode,country, phoneNo);
+		this.customerNo=customerNo;
+	}
+	
+	public String getCustomerNo() {
 		return customerNo;
 	}
 
-	public void setCustomerNo(int customerNo) {
+	public void setCustomerNo(String customerNo) {
 		this.customerNo = customerNo;
 	}
-
-	public PrivateCustomer(String name, String address, int zipCode, String city, int phoneNo) {
-		super(name, address, zipCode, city, phoneNo);
-		
+	
+	@Override
+	public String toString() {
+		return String.format("PrivateCustomer [customerId=%d, name=%s, street= %s, zipCode=%s, country=%s, phoneNo=%s, customerNo=%s]", getCustomerId(), getName(), getStreet(), getZipCode(),getCountry(),getPhoneNo(),customerNo);
 	}
+	
 
 }

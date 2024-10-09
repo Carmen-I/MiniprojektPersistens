@@ -2,20 +2,25 @@ package model;
 
 public class BusinessCustomer extends Customer {
 
-	private int businessNo;
+	private int cvr;
 	
 
-	public BusinessCustomer(String name, String address, int zipCode, String city, int phoneNo) {
-		super(name, address, zipCode, city, phoneNo);
-		
-	}
-	
-	public int getBusinessNo() {
-		return businessNo;
+	public BusinessCustomer(int customerId, String name, String street, String zipCode, String country, String phoneNo,String customerNo,int cvr) {
+		super(customerId, name, street, zipCode,country, phoneNo);
+		this.cvr=cvr;
 	}
 
-	public void setBusinessNo(int businessNo) {
-		this.businessNo = businessNo;
+	public int getCvr() {
+		return cvr;
+	}
+
+	public void setCvr(int cvr) {
+		this.cvr = cvr;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("PrivateCustomer [customerId=%d, name=%s, street= %s, zipCode=%s, country=%s, phoneNo=%s, customerNo=%s, cvr=%d]", getCustomerId(), getName(), getStreet(), getZipCode(),getCountry(),getPhoneNo(),cvr);
 	}
 
 }
