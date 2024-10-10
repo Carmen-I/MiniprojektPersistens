@@ -3,8 +3,10 @@ package model;
 public class PrivateCustomer extends Customer {
 	
 	
+
 	public PrivateCustomer(int customerId, String name, String street, String zipCode, String country, String phoneNo) {
 		super(customerId, name, street, zipCode,country, phoneNo);
+
 	}
 	
 	

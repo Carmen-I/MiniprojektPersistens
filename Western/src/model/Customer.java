@@ -8,9 +8,10 @@ public abstract class Customer {
 	private String zipCode;
 	private String country;
 	private String phoneNo;
-	
+
 	
 	public Customer(int customerId,String name,String address,String zipCode, String country,String phoneNo) {
+
 		this.customerId=customerId;
 		this.name=name;
 		this.street=street;
@@ -19,7 +20,6 @@ public abstract class Customer {
 		this.phoneNo=phoneNo;
 		
 	}
-
 
 	public String getName() {
 		return name;

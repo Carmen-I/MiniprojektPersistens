@@ -2,25 +2,28 @@ package model;
 
 public class BusinessCustomer extends Customer {
 
-	private String cvr;//jeg har skiftet fra int til String, så det er nemmere når man skal finde en kunde baseret på code,plus vi skal have som string kundetype
+	private int cvr;
 	
 
-	public BusinessCustomer(int customerId, String name, String street, String zipCode, String country, String phoneNo,String cvr) {
-		super(customerId, name, street, zipCode,country,phoneNo);
+
+	public BusinessCustomer(int customerId, String name, String street, String zipCode, String country, String phoneNo,int cvr) {
+		super(customerId, name, street, zipCode,country, phoneNo);
 		this.cvr=cvr;
 	}
 
-	public String getCvr() {
+	public int getCvr() {
 		return cvr;
 	}
 
-	public void setCvr(String cvr) {
+	public void setCvr(int cvr) {
 		this.cvr = cvr;
 	}
 	
 	@Override
 	public String toString() {
+
 		return String.format("PrivateCustomer [customerId=%d, name=%s, street= %s, zipCode=%s, country=%s, phoneNo=%s, cvr=%d]", getCustomerId(), getName(), getStreet(), getZipCode(),getCountry(),getPhoneNo(),cvr);
+
 	}
 
 }
