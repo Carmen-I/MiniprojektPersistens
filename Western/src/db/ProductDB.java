@@ -8,20 +8,21 @@ import model.Product;
 
 public class ProductDB implements ProductDBIF {
 	private static final String findProductByBarcodeQ = "SELECT * FROM PRODUCT WHERE Barcode = ?";
-	private static final String checkUpdateQ = "";
-	private static final String findProductTypeByProductIdQ = "SELECT Product_id, 'CLOTHING' AS tableName from CLOTHING where Product_id = ? "
-			+ "UNION SELECT Product_id, 'EQUIPMENT' AS tableName FROM EQUIPMENT WHERE Product_id = ? UNION SELECT Product_id, 'GUN_REPLICA' AS tableName from GUN_REPLICA WHERE Product_id = ?";
-
+	private static final String findClothingByProductIdQ = "SELECT * FROM CLOTHING WHERE Product_id = ?";
+	private static final String findEquipmentByProductIdQ = "SELECT * FROM EQUIPMENT WHERE Product_id = ?";
+	private static final String findGunReplicaByProductIdQ = "SELECT * FROM GUN_REPLICA WHERE Product_id = ?";
 	private PreparedStatement findProductByBarcodeStatement;
-	private PreparedStatement checkUpdate;
-	private PreparedStatement findProductTypeByProductIdStatement;
+	private PreparedStatement findClothingByProductIdStatement;
+	private PreparedStatement findEquipmentByProductIdStatement;
+	private PreparedStatement findGunReplicaByProductIdStatement;
 	private DBConnection dbConnection;
 
 	public ProductDB() throws SQLException, DataAccessException {
 		dbConnection = DBConnection.getInstance();
 		findProductByBarcodeStatement = dbConnection.getConnection().prepareStatement(findProductByBarcodeQ);
-		findProductTypeByProductIdStatement = dbConnection.getConnection()
-				.prepareStatement(findProductTypeByProductIdQ);
+		findClothingByProductIdStatement = dbConnection.getConnection().prepareStatement(findClothingByProductIdQ);
+		findEquipmentByProductIdStatement = dbConnection.getConnection().prepareStatement(findEquipmentByProductIdQ);
+		findGunReplicaByProductIdStatement = dbConnection.getConnection().prepareStatement(findGunReplicaByProductIdQ);
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class ProductDB implements ProductDBIF {
 			findProductByBarcodeStatement.setString(1, barcode);
 			ResultSet rs = findProductByBarcodeStatement.executeQuery();
 			if (rs.next()) {
-				p = buildObject(rs, retrieveAssociation);
+				p = buildObject(rs, true);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -47,16 +48,45 @@ public class ProductDB implements ProductDBIF {
 
 		try {
 			int productId = rs.getInt(1);
-			ResultSet rs = findProductTypeByProductIdStatement.executeQuery();
-
-			product = new Product(Id, rs.getString(2), rs.getDate(3).toLocalDate(), rs.getString(4));
+			String barcode = rs.getString(2);
+			String name = rs.getString(3);
+			String isoCode = rs.getString(4);
+			int productType = rs.getInt(5);
+			switch (productType) {
+			case 1:
+				ResultSet rs1 = findClothingByProductIdStatement.executeQuery();
+				String size = rs1.getString(2);
+				String color = rs1.getString(3);
+				product = new Clothing(productId, barcode, name, isoCode, size, color);
+				break;
+			case 2:
+				ResultSet rs2 = findEquipmentByProductIdStatement.executeQuery();
+				String type = rs1.getString(2);
+				String description = rs1.getString(3);
+				product = new Equipment(productId, barcode, name, isoCode, type, description);
+				break;
+			case 3:
+				ResultSet rs3 = findGunReplicaByProductIdStatement.executeQuery();
+				String calibre = rs1.getString(2);
+				String material = rs1.getString(3);
+				product = new GunReplica(productId, barcode, name, isoCode, calibre, material);
+				break;
+			default:
+				// throw some sort of exception - invalidProductType
+			} 
+			
 			if (retrieveAssociation) {
-				product.setOrderlines(orderLineDB.findAllOrderLine(orderId));
+				setLocations();
 			}
 		} catch (SQLException e) {
 			throw new DataAccessException("Cannot convert from ResultSet", e);
 		}
 		return product;
+	}
+	
+	private void setLocations(Product product) {
+		LocationDB ldb = new LocationDB();
+		product.setLocations(ldb.findAllLocationsOfProduct(product));
 	}
 
 }

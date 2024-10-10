@@ -30,7 +30,7 @@ public class SalesOrderController {
 	
 	public Product addProductToOrder(String barcode) {
 		ProductController productController = new ProductController();
-		Product product = productController.findProductByBarcode(barcode, false);
+		Product product = productController.findProductByBarcode(barcode, true);
 		
 		return product;
 	}
