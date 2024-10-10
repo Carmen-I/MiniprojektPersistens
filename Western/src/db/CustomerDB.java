@@ -1,19 +1,13 @@
 package db;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import db.DBConnection;
-import model.BusinessCustomer;
 import model.Customer;
-import model.PrivateCustomer;
 
 public class CustomerDB implements CustomerDBIF {
+
 
 	private static final String findCustomerByPhoneNoQ = "SELECT c.Customer_id, c.Name,c.Cvr, c.Phone, cl.Zip_code, cl.Street, cl.Country FROM CUSTOMER JOIN CUSTOMER_LOCATION cl ON c.Customer_id = cl.Customer_id WHERE c.Phone = ?";
 	private static final String insertCustomerQ = "INSERT INTO CUSTOMER VALUES (Customer_id,Name,Cvr,Phone) VALUES (?,?,?,?)";
@@ -41,9 +35,7 @@ public class CustomerDB implements CustomerDBIF {
 			e.printStackTrace();
 			throw new DataAccessException("blah",e);
 		}
-		
-		return c;//DET DUER IKKE, VI SKAL bruge id´ en eller noget med database  scripts
-	}
+
 	
 	
 	@Override
@@ -71,29 +63,11 @@ public class CustomerDB implements CustomerDBIF {
 			e.printStackTrace();
 			throw new DataAccessException("blah",e);
 		}
-		
-		
-		return c;
-		
-	}
-	
-	private List<Customer> buildObjects(ResultSet rs) throws DataAccessException{
-		List<Customer> customers=new ArrayList<>();
-		Customer c=null;
-		try {
-			do 
-			{  c=buildObject(rs);
-			  customers.add(c);
-				
-			}while(rs.next());
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DataAccessException("blah",e);
-		}
-		
-		return  customers;
-	}
 
 	
+	private List<Customer> buildObjects(ResultSet rs){
+		
+		return null;
+	}
 	
 }
