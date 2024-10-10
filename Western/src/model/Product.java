@@ -48,4 +48,9 @@ public abstract class Product {
 		}
 		return stock;
 	}
+
+	public int getStockInLocation(int locationId) {
+		return locations.get(locationId - 1).getCurrentStock();
+	}
+
 }

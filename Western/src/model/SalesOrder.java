@@ -14,6 +14,7 @@ public class SalesOrder {
 	private LocalDate deliveryDate;
 	private BigDecimal totalPrice;
 	private List<SalesOrderLine> orderlines;
+	private Customer customer;
 
 	public SalesOrder(int orderNo, String deliveryStatus, LocalDate deliveryDate) {
 		this.orderNo = orderNo;
@@ -69,6 +70,19 @@ public class SalesOrder {
 
 	public boolean setOrderLines(List<SalesOrderLine> orderlines) {
 		return this.setOrderLines(orderlines);
+	}
+
+	public boolean addOrderLine(SalesOrderLine orderline) {
+		return orderlines.add(orderline);
+	}
+
+	public void addSaleOrderLinetoSaleOrder(Product product, int quantity) {
+		SalesOrderLine orderline = new SalesOrderLine(product, quantity);
+		addOrderLine(orderline);
+	}
+
+	public void addCustomerToOrder(Customer customer) {
+		this.customer = customer;
 	}
 
 }
