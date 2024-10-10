@@ -15,9 +15,9 @@ public class CustomerController {
 		customerDB=new CustomerDB();
 	}
 	
-	public Customer findCustomerByCustomerNumber(String customerNo) throws DataAccessException {
+	public Customer findCustomerByPhoneNo(String phoneNo) throws DataAccessException {
 		
-		return customerDB.findCustomerByCustomerNumber(customerNo);
+		return customerDB.findCustomerByPhoneNo(phoneNo);
 	}
 	
 	public void createCustomer() {

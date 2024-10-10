@@ -15,7 +15,7 @@ import model.PrivateCustomer;
 
 public class CustomerDB implements CustomerDBIF {
 
-	private static final String findCustomerByCustomerNoQ = "SELECT*FROM CUSTOMER WHERE Customer_no=?";
+	private static final String findCustomerByCustomerNoQ = "SELECT*FROM CUSTOMER WHERE Phone=?";
 	private static final String insertCustomerQ = "";
 	private PreparedStatement findCustomerByNo;
 	private PreparedStatement addNewCustomer;
@@ -28,10 +28,10 @@ public class CustomerDB implements CustomerDBIF {
 	}
 	
 	@Override
-	public Customer findCustomerByCustomerNumber(String customerNo) throws DataAccessException {
+	public Customer findCustomerByPhoneNo(String phoneNo) throws DataAccessException {
 		Customer c=null;
 		try {
-			findCustomerByNo.setString(1, customerNo);
+			findCustomerByNo.setString(1, phoneNo);
 			ResultSet rs=findCustomerByNo.executeQuery();
 			if(rs.next()) {
 			c=buildObject(rs);
@@ -62,10 +62,10 @@ public class CustomerDB implements CustomerDBIF {
 			String customerType=rs.getString("Customer_type");
 			if("BUSINESS".equalsIgnoreCase(customerType)) {
 				String cvr=rs.getString("Cvr");
-				c=new BusinessCustomer(customerId,name,street,zipCode,country,phoneNo,customerType,cvr);
+				c=new BusinessCustomer(customerId,name,street,zipCode,country,phoneNo,cvr);
 			}else if("PRIVATE".equalsIgnoreCase(customerType));
                     	String customerNo=rs.getString("Customer_no");	//review database and add customerNo	
-                    	c=new PrivateCustomer(customerId,name,street,zipCode,country,phoneNo,customerType,customerNo);
+                    	c=new PrivateCustomer(customerId,name,street,zipCode,country,phoneNo);
 		}catch(SQLException e) {
 			e.printStackTrace();
 			throw new DataAccessException("blah",e);
