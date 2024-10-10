@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.Clothing;
+import model.Equipment;
+import model.GunReplica;
 import model.Product;
 
 public class ProductDB implements ProductDBIF {
@@ -73,17 +76,17 @@ public class ProductDB implements ProductDBIF {
 				break;
 			default:
 				// throw some sort of exception - invalidProductType
-			} 
-			
+			}
+
 			if (retrieveAssociation) {
-				setLocations();
+				setLocations(product);
 			}
 		} catch (SQLException e) {
 			throw new DataAccessException("Cannot convert from ResultSet", e);
 		}
 		return product;
 	}
-	
+
 	private void setLocations(Product product) {
 		LocationDB ldb = new LocationDB();
 		product.setLocations(ldb.findAllLocationsOfProduct(product));
