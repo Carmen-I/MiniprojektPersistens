@@ -15,15 +15,16 @@ import model.PrivateCustomer;
 
 public class CustomerDB implements CustomerDBIF {
 
-	private static final String findCustomerByCustomerNoQ = "SELECT*FROM CUSTOMER WHERE Phone=?";
-	private static final String insertCustomerQ = "";
-	private PreparedStatement findCustomerByNo;
+	private static final String findCustomerByPhoneNoQ = "SELECT c.Customer_id, c.Name,c.Cvr, c.Phone, cl.Zip_code, cl.Street, cl.Country FROM CUSTOMER JOIN CUSTOMER_LOCATION cl ON c.Customer_id = cl.Customer_id WHERE c.Phone = ?";
+	private static final String insertCustomerQ = "INSERT INTO CUSTOMER VALUES (Customer_id,Name,Cvr,Phone) VALUES (?,?,?,?)";
+	private static final String insertCustomerLocationQ="INSERT INTO CUSTOMER_LOCATION(Zip_code,Street,Country,Customer_id) VALUES (?,?,?,?)";
+	private PreparedStatement findCustomerByPhoneNo;
 	private PreparedStatement addNewCustomer;
 	private Connection con;
 	
 	public CustomerDB()throws SQLException,DataAccessException{
 		con=DBConnection.getInstance().getConnection();
-		findCustomerByNo=con.prepareStatement(findCustomerByCustomerNoQ,Statement.RETURN_GENERATED_KEYS);
+		findCustomerByPhoneNo=con.prepareStatement(findCustomerByPhoneNoQ,Statement.RETURN_GENERATED_KEYS);
 		addNewCustomer=con.prepareStatement(insertCustomerQ, Statement.RETURN_GENERATED_KEYS);
 	}
 	
@@ -31,8 +32,8 @@ public class CustomerDB implements CustomerDBIF {
 	public Customer findCustomerByPhoneNo(String phoneNo) throws DataAccessException {
 		Customer c=null;
 		try {
-			findCustomerByNo.setString(1, phoneNo);
-			ResultSet rs=findCustomerByNo.executeQuery();
+			findCustomerByPhoneNo.setString(1, phoneNo);
+			ResultSet rs=findCustomerByPhoneNo.executeQuery();
 			if(rs.next()) {
 			c=buildObject(rs);
 			}
@@ -47,6 +48,7 @@ public class CustomerDB implements CustomerDBIF {
 	
 	@Override
 	public void createCustomer(Customer customer) {
+		
 		
 	}
 	
@@ -64,7 +66,6 @@ public class CustomerDB implements CustomerDBIF {
 				String cvr=rs.getString("Cvr");
 				c=new BusinessCustomer(customerId,name,street,zipCode,country,phoneNo,cvr);
 			}else if("PRIVATE".equalsIgnoreCase(customerType));
-                    	String customerNo=rs.getString("Customer_no");	//review database and add customerNo	
                     	c=new PrivateCustomer(customerId,name,street,zipCode,country,phoneNo);
 		}catch(SQLException e) {
 			e.printStackTrace();
